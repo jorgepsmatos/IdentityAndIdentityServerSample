@@ -24,26 +24,11 @@ namespace IdentitySample.Areas.Identity
                     options.UseSqlite(
                         context.Configuration.GetConnectionString("IdentitySampleContextConnection")));
 
-                // services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-
                 services.AddAuthentication(o =>
                     {
                         o.DefaultScheme = IdentityConstants.ApplicationScheme;
                         o.DefaultSignInScheme = IdentityConstants.ExternalScheme;
                     })
-                    // .AddCookie(IdentityConstants.ApplicationScheme, o =>
-                    // {
-                    //     o.LoginPath = new PathString("/Account/Login");
-                    //     o.Events = new CookieAuthenticationEvents
-                    //     {
-                    //         OnValidatePrincipal = SecurityStampValidator.ValidatePrincipalAsync
-                    //     };
-                    // })
-                    // .AddCookie(IdentityConstants.ExternalScheme, o =>
-                    // {
-                    //     o.Cookie.Name = IdentityConstants.ExternalScheme;
-                    //     o.ExpireTimeSpan = TimeSpan.FromMinutes(5);
-                    // })
                     .AddOpenIdConnect("oidc", options =>
                     {
                         options.Authority = "https://localhost:5001";
@@ -59,7 +44,7 @@ namespace IdentitySample.Areas.Identity
                         options.Scope.Add("profile");
                         options.Scope.Add("email");
                     })
-                    .AddIdentityCookies(o => { });
+                    .AddIdentityCookies();
 
                 services
                     .AddIdentityCore<IdentityUser>(o =>
@@ -76,31 +61,6 @@ namespace IdentitySample.Areas.Identity
                     .AddDefaultUI()
                     .AddEntityFrameworkStores<IdentitySampleContext>()
                     .AddDefaultTokenProviders();
-
-                // services.AddAuthentication(options =>
-                //     {
-                //         options.DefaultScheme = "Cookies";
-                //         options.DefaultChallengeScheme = "oidc";
-                //     })
-                //     .AddCookie("Cookies")
-                //     .AddOpenIdConnect("oidc", options =>
-                //     {
-                //         options.Authority = "https://localhost:5001";
-                //         options.RequireHttpsMetadata = false;
-                //
-                //         options.ClientId = "mvc";
-                //         options.ClientSecret = "secret";
-                //         options.ResponseType = "id_token";
-                //
-                //         options.SaveTokens = true;
-                //
-                //         options.Scope.Add("offline_access");
-                //         options.Scope.Add("profile");
-                //         options.Scope.Add("email");
-                //     });
-
-
-                //services.AddTransient<IEmailSender, EmailSender>();
             });
         }
     }
