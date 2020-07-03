@@ -30,15 +30,6 @@ namespace IdentitySample
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
-            //services.AddDbContext<ApplicationDbContext>(options =>
-            //    options.UseSqlServer(
-            //        Configuration.GetConnectionString("DefaultConnection")));
-            //services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-            //    .AddEntityFrameworkStores<ApplicationDbContext>();
-            //services.AddControllersWithViews();
-            //services.AddRazorPages();
-            
-            // JwtSecurityTokenHandler.DefaultMapInboundClaims = false;
 
             services.AddMvc();
         }
@@ -64,14 +55,7 @@ namespace IdentitySample
 
             app.UseAuthentication();
             app.UseAuthorization();
-
-            // app.UseEndpoints(endpoints =>
-            // {
-            //     endpoints.MapControllerRoute(
-            //         name: "default",
-            //         pattern: "{controller=Home}/{action=Index}/{id?}");
-            //     endpoints.MapRazorPages();
-            // });
+            
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapDefaultControllerRoute();
